@@ -40,3 +40,30 @@
 .read-the-docs {
   color: #888;
 } */
+
+
+.App{
+
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.appHeader{
+
+  height: 60px;
+}
+
+
+.appFooter{
+  height: 60px;
+  background-color: black;
+}
+
+
+.appContent{
+
+  height: 60px;
+  background-color: black;
+}

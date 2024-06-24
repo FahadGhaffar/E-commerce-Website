@@ -3,11 +3,13 @@
 
 const AppFooter = () => {
  
-    return (<>
+    return (
+        <div className="appFooter">
     
     
        <h1>footer</h1>
-    </>);
+       </div>
+    );
 
 }
 
