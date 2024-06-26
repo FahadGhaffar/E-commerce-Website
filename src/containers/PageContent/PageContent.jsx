@@ -1,3 +1,4 @@
+import AppRoutes from "../Routes/AppRoutes";
 
 
 const AppContent = () => {
@@ -5,7 +6,7 @@ const AppContent = () => {
     return (
       <div className='appContent'>
        
-       <h1>appContent   </h1>
+        <AppRoutes/>
       </div>
     )
 
