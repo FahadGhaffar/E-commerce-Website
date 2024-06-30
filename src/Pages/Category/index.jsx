@@ -1,3 +1,4 @@
+import Product from "../../containers/Products";
 
 
 
@@ -6,7 +7,9 @@
 const Category = ()  =>{
 
     return (
-         <div>Category</div>
+         <div>
+            <Product/>
+         </div>
     );
 }
 
