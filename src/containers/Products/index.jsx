@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { getAllProducts } from "../../Api/indus";
-import { List } from "antd";
+import { Card, List } from "antd";
 
 
 
@@ -16,7 +16,7 @@ const Product = () => {
     return (
         <div>
             <List renderItem={(product,index)=>{
-                
+                return <Card title={product.title}></Card>
             }}>
                 dataSource={items}
             </List>
