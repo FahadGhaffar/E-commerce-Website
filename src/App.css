@@ -67,3 +67,8 @@
   height: 60px;
   background-color: black;
 }
+
+.itemCardImage{
+  height: 150px !important;
+  object-fit: scale-down;
+}

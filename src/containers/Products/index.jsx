@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { getAllProducts } from "../../Api/indus";
-import { Card, List,Image } from "antd";
+import { Card, List,Image, Typography } from "antd";
 
 
 
@@ -17,15 +17,33 @@ const Product = () => {
     return (
         <div>
             <h1>products</h1>
-            <List renderItem={(product,index)=>{
+            <List 
+            grid={{column:3}}            
+            renderItem={(product,index)=>{
                
-
+                
                 return <Card title={product.title} 
-                            id={index}
-                            cover={<Image src={product.thumbnail}/>}></Card>
+                            key={index}
+                            cover={<Image className="itemCardImage" src={product.thumbnail}/>}>
+
+
+                                <Card.Meta 
+                                title={
+                                <Typography.Paragraph>
+                                    Price : ${product.price} {" "}
+
+                                    <Typography.Text  type="danger" delete>
+                                        ${parseFloat( product.price+ (product.price* product.discountPercentage)/100).toFixed(2)}
+                                    </Typography.Text>
+                                    </Typography.Paragraph>}
+                                    
+                                    desscription = {product.desscription}
+
+                                    
+                                    ></Card.Meta>
+                            </Card>
             }}
             dataSource={items}>
-               
             </List>
         </div>
     )
