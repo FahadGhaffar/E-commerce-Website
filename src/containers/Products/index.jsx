@@ -22,7 +22,9 @@ const Product = () => {
             renderItem={(product,index)=>{
                
                 
-                return <Card title={product.title} 
+                return <Card 
+                    className="itemCard"
+                    title={product.title} 
                             key={index}
                             cover={<Image className="itemCardImage" src={product.thumbnail}/>}>
 
@@ -33,11 +35,14 @@ const Product = () => {
                                     Price : ${product.price} {" "}
 
                                     <Typography.Text  type="danger" delete>
-                                        ${parseFloat( product.price+ (product.price* product.discountPercentage)/100).toFixed(2)}
+                                        ${parseFloat( 
+                                            product.price+ 
+                                            (product.price* product.discountPercentage)/100)
+                                            .toFixed(2)}
                                     </Typography.Text>
                                     </Typography.Paragraph>}
                                     
-                                    desscription = {product.desscription}
+                                    description = {<Typography.Paragraph ellipsis={{row:2, expandable:true, symbol:'more'}}>{product.description}</Typography.Paragraph>}
 
                                     
                                     ></Card.Meta>
