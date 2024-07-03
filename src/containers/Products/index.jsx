@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { getAllProducts } from "../../Api/indus";
-import { Card, List,Image, Typography } from "antd";
+import { Card, List,Image, Typography, Badge } from "antd";
 
 
 
@@ -22,7 +22,9 @@ const Product = () => {
             renderItem={(product,index)=>{
                
                 
-                return <Card 
+                return 
+                <Badge.Ribbon text={product.discountPercentage}>
+                <Card 
                     className="itemCard"
                     title={product.title} 
                             key={index}
@@ -47,6 +49,7 @@ const Product = () => {
                                     
                                     ></Card.Meta>
                             </Card>
+                            </Badge.Ribbon>
             }}
             dataSource={items}>
             </List>
