@@ -1,18 +1,25 @@
 import { useEffect,useState } from "react";
-import { addToCart, getAllProducts } from "../../Api/indus";
-import { Card, List,Image, Typography, Badge,Rate, Button } from "antd";
-
+import { addToCart, getAllProducts,getProductsByCategory } from "../../Api";
+import { Card, List,Image, Typography, Badge,Rate, Button, message, Spin } from "antd";
+import { useParams } from "react-router-dom";
 
 
 const Product = () => {
-
+    const [loading, setLoading] = useState(false)
+    const parms = useParams()
     const [items,setItems]=useState([]);
     useEffect(()=>{
-        getAllProducts().then(res=>{
+        setLoading(true)
+        getProductsByCategory(parms.categoryId).then(res=>{
                 setItems(res.products)
                 // console.log(res)
+
+        setLoading(false)
         })
-    },[])
+    },[parms]);
+    if(loading) {
+        return <Spin spinning/>
+    }
 
     return (
         <div>
@@ -62,18 +69,21 @@ const Product = () => {
 
 }
 const AddToCardButton = ({items}) =>{
-    
+    const [loading, setLoading] = useState(false)
     const addProductToCart = () => {
+        setLoading(true)
         addToCart(items.id).then(res => {
             message.success(`${items.title} has been added to cart!`);
+           setLoading(false)
         })
     }
     return(
  <Button type="link" 
         onClick={()=>{
             addProductToCart()
-            console.log("working")
+            
         }}
+        loading={loading}
     >Add to Cart</Button>
     );
 }
