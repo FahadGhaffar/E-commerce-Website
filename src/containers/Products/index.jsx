@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
-import { getAllProducts } from "../../Api/indus";
-import { Card, List,Image, Typography, Badge } from "antd";
+import { addToCart, getAllProducts } from "../../Api/indus";
+import { Card, List,Image, Typography, Badge,Rate, Button } from "antd";
 
 
 
@@ -22,14 +22,18 @@ const Product = () => {
             renderItem={(product,index)=>{
                
                 
-                return 
-                <Badge.Ribbon text={product.discountPercentage}>
+                return (
+                <Badge.Ribbon className="itemCardBadge" text={product.discountPercentage} color="pink">
                 <Card 
                     className="itemCard"
                     title={product.title} 
                             key={index}
-                            cover={<Image className="itemCardImage" src={product.thumbnail}/>}>
-
+                            cover={<Image className="itemCardImage" src={product.thumbnail}/>}
+                            actions = {[
+                                <Rate allowHalf disabled value={product.rating} />,
+                               <AddToCardButton items ={product}/> 
+                            ]}
+                            >
 
                                 <Card.Meta 
                                 title={
@@ -49,13 +53,28 @@ const Product = () => {
                                     
                                     ></Card.Meta>
                             </Card>
-                            </Badge.Ribbon>
-            }}
+                             </Badge.Ribbon>
+    )}}
             dataSource={items}>
             </List>
         </div>
     )
 
 }
-
+const AddToCardButton = ({items}) =>{
+    
+    const addProductToCart = () => {
+        addToCart(items.id).then(res => {
+            message.success(`${items.title} has been added to cart!`);
+        })
+    }
+    return(
+ <Button type="link" 
+        onClick={()=>{
+            addProductToCart()
+            console.log("working")
+        }}
+    >Add to Cart</Button>
+    );
+}
 export default Product;
