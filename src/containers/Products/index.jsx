@@ -9,13 +9,20 @@ const Product = () => {
     const parms = useParams()
     const [items,setItems]=useState([]);
     useEffect(()=>{
-        setLoading(true)
-        getProductsByCategory(parms.categoryId).then(res=>{
-                setItems(res.products)
-                // console.log(res)
+        setLoading(true);
+        (parms?.categoryId 
+            ? getProductsByCategory(parms.categoryId) 
+            : getAllProducts() 
+        ).then(res=>{
+                setItems(res.products);
+                console.log(res);
 
-        setLoading(false)
+        setLoading(false);
         })
+        //  (parms?.categoryId 
+        //     ? console.log(parms.categoryId) 
+        //     : console.log("get")
+        // )
     },[parms]);
     if(loading) {
         return <Spin spinning/>
