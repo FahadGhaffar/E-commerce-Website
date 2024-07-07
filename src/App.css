@@ -53,19 +53,26 @@
 .appHeader{
 
   height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items:  center;
 }
-
+.shoppingCartOutlined{
+  font-size: 30px;
+  margin-right: 16px;
+  cursor: pointer;
+}
 
 .appFooter{
   height: 60px;
-  background-color: black;
+  /* background-color: black; */
 }
 
 
 .appContent{
 
   height: 60px;
-  background-color: black;
+  /* background-color: black; */
 }
 .itemCard, .itemCardBadge{
   margin: 8px;
@@ -74,4 +81,5 @@
   height: 150px !important;
   object-fit: scale-down;
 }
+
 

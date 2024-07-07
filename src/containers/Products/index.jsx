@@ -19,10 +19,7 @@ const Product = () => {
 
         setLoading(false);
         })
-        //  (parms?.categoryId 
-        //     ? console.log(parms.categoryId) 
-        //     : console.log("get")
-        // )
+       
     },[parms]);
     if(loading) {
         return <Spin spinning/>

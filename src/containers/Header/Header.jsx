@@ -1,6 +1,8 @@
-import {HomeFilled} from "@ant-design/icons"
-import {Menu} from "antd"
+import {HomeFilled ,ShoppingCartOutlined} from "@ant-design/icons"
+import {Badge, Drawer, InputNumber, Menu, Table, Typography} from "antd"
+import {  useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom"
+import { getCart } from "../../Api"
 
 
 const AppHeader = () => {
@@ -75,9 +77,80 @@ const AppHeader = () => {
        
        
        />
+
+       <Typography.Title>Aamir Store </Typography.Title>
+       <AppCart/>
     
        </div>);
 
+
+
+
+}
+
+const AppCart = () => {
+    const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+    const [cartItem, setCartItem] = useState([])
+    useEffect(() => {
+      getCart().then ( res => {
+        setCartItem(res.products)
+      }) 
+    }, [])
+   return( <div>
+       <Badge onClick={ () =>{
+        setCartDrawerOpen(true)
+       }}  count={7} className="shoppingCartOutlined" >
+        <ShoppingCartOutlined />
+        </Badge>
+        <Drawer open={cartDrawerOpen} onClose={ () => {
+
+            setCartDrawerOpen(false)
+        }}
+        title= "Your Cart"
+        contentWrapperStyle={{width:500}}
+        >
+            <Table 
+            pagination={false}
+            columns={[{
+                title:'Title',
+                dataIndex: 'title'
+            },
+            {
+                title:'Price',
+                dataIndex: 'price',
+                render:(value )=>{
+                    return <span>${value}</span>
+                },
+            },
+            {
+                title:'Quantity',
+                dataIndex: 'quantity',
+                render: (value) =>{
+                        return <InputNumber defaultValue={value}></InputNumber>
+                },
+
+
+            },
+            {
+                title:'Total',
+                dataIndex: 'total',
+                render:(value )=>{
+                    return <span>${value}</span>
+                },
+            }
+            
+            ]}
+            dataSource={cartItem}
+            summary={(data)=>{
+               const total = data.reduce((pre,current) =>{
+                            return pre+current.total
+                },0)
+                return <span>Total : {total}</span>
+            }}
+            />
+             </Drawer>
+        </div>
+   );
 }
 
 export default AppHeader;
