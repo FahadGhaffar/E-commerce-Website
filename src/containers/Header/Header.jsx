@@ -128,8 +128,11 @@ const AppCart = () => {
                 render: (value,record) =>{
                         return <InputNumber min={0} defaultValue={value}  
                         onClick={(value) =>{
+                            
 
                           setCartItem(pre =>   pre.map(cart=>{
+                                console.log("record.id " +record.id)
+                                console.log("cart.id " +cart.id)
                                 if(record.id === cart.id){
 
                                     cart.total = cart.price * value;
