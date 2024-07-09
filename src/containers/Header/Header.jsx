@@ -126,25 +126,29 @@ const AppCart = () => {
                 title:'Quantity',
                 dataIndex: 'quantity',
                 render: (value,record) =>{
-                        return <InputNumber min={0} defaultValue={value}  
+                        return( 
+                        <InputNumber 
+                        min={0} 
+                        defaultValue={value}  
                         onClick={(value) =>{
-                            console.log("value " +value)
+                            // console.log("value " +value)
 
-                          setCartItem(pre =>   pre.map(cart=>{
-                                console.log("record.id " +record.id)
-                                console.log("cart.id " +cart.id)
-                                console.log("cart.total " +cart.total)
-                                console.log("cart.price " +typeof(cart.price))
-                                console.log("value " +typeof(value))
+                          setCartItem( (pre) =>
+                               pre.map((cart)=>{
+                                
                                 if(record.id === cart.id){
 
-                                    cart.total = cart.price *parseInt( value);
+                                    // cart.total = cart.price * parseInt(value);
+                                    console.log(cart)
+                                    cart.total = 6;
                                 }
                                 return cart 
-                            }))
+                            })
+                        );
                         }}
                         
                         ></InputNumber>
+                    )
                 },
 
 
