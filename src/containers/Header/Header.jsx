@@ -1,5 +1,5 @@
 import {HomeFilled ,ShoppingCartOutlined} from "@ant-design/icons"
-import {Badge, Drawer, InputNumber, Menu, Table, Typography} from "antd"
+import {Badge, Button, Drawer, Form, Input, InputNumber, Menu, Table, Typography} from "antd"
 import {  useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getCart } from "../../Api"
@@ -78,7 +78,7 @@ const AppHeader = () => {
        
        />
 
-       <Typography.Title>Aamir Store </Typography.Title>
+       <Typography.Title> Store </Typography.Title>
        <AppCart/>
     
        </div>);
@@ -90,9 +90,12 @@ const AppHeader = () => {
 
 const AppCart = () => {
     const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+    const [CheckoutDrawerOpen, setCheckoutDrawerOpen] = useState(false);
+    
     const [cartItem, setCartItem] = useState([])
     useEffect(() => {
       getCart().then ( res => {
+    
         setCartItem(res.products)
       }) 
     }, [])
@@ -130,17 +133,17 @@ const AppCart = () => {
                         <InputNumber 
                         min={0} 
                         defaultValue={value}  
-                        onClick={(value) =>{
-                            // console.log("value " +value)
+                        onChange={(value) =>{
+                        
 
                           setCartItem( (pre) =>
                                pre.map((cart)=>{
                                 
                                 if(record.id === cart.id){
 
-                                    // cart.total = cart.price * parseInt(value);
-                                    console.log(cart)
-                                    cart.total = 6;
+                                    cart.total = cart.price * value;
+                                    
+                                  
                                 }
                                 return cart 
                             })
@@ -162,7 +165,9 @@ const AppCart = () => {
             }
             
             ]}
+            
             dataSource={cartItem}
+
             summary={(data)=>{
                const total = data.reduce((pre,current) =>{
                             return pre+current.total
@@ -170,6 +175,34 @@ const AppCart = () => {
                 return <span>Total : {total}</span>
             }}
             />
+            <Button onClick={()=>{
+                          setCheckoutDrawerOpen(true)
+            }} type="primary">Check Your Cart</Button>
+             </Drawer>
+
+             <Drawer open={CheckoutDrawerOpen} onClose={()=> {
+                setCheckoutDrawerOpen(false)
+             }} 
+             title="Confirm Order"
+             >
+
+                <Form>
+
+                    <Form.Item label='Full Name' name="full_name">
+
+                        <Input placeholder="Enter your full name..."/>
+                    </Form.Item>
+                    <Form.Item label='Email' name="your_email">
+
+                        <Input placeholder="Enter your email..."/>
+                    </Form.Item>
+                    <Form.Item label='Address' name="your_address">
+
+                        <Input placeholder="Enter your address..."/>
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit">Confirm Order</Button>
+                </Form>
+
              </Drawer>
         </div>
    );
