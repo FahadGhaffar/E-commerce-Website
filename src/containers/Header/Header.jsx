@@ -1,5 +1,5 @@
 import {HomeFilled ,ShoppingCartOutlined} from "@ant-design/icons"
-import {Badge, Button, Drawer, Form, Input, InputNumber, Menu, Table, Typography} from "antd"
+import {Badge, Button, Checkbox, Drawer, Form, Input, InputNumber, Menu, message, Table, Typography} from "antd"
 import {  useState,useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { getCart } from "../../Api"
@@ -99,6 +99,15 @@ const AppCart = () => {
         setCartItem(res.products)
       }) 
     }, [])
+
+    const  onConfirmOrder = (value)=> {
+
+        console.log({value});   
+       setCartDrawerOpen(false)
+       setCheckoutDrawerOpen(false)
+       message.success("Your Order has been placed")
+    
+    } 
    return( <div>
        <Badge onClick={ () =>{
         setCartDrawerOpen(true)
@@ -186,19 +195,46 @@ const AppCart = () => {
              title="Confirm Order"
              >
 
-                <Form>
+                <Form onFinish={onConfirmOrder}>
 
-                    <Form.Item label='Full Name' name="full_name">
+                    <Form.Item 
+                    rules={[
+                        {
+                            required: true,
+                            message: "Please enter your full name..."
+                        }
+                    ]}
+                    
+                    label='Full Name' name="full_name">
 
                         <Input placeholder="Enter your full name..."/>
                     </Form.Item>
-                    <Form.Item label='Email' name="your_email">
+                    <Form.Item 
+                     rules={[
+                        {
+                            required: true,
+                            type: "email",
+                            message: "Please enter your email ..."
+                        }
+                    ]}
+                    label='Email' name="your_email">
 
                         <Input placeholder="Enter your email..."/>
                     </Form.Item>
-                    <Form.Item label='Address' name="your_address">
+                    <Form.Item 
+                     rules={[
+                        {
+                            required: true,
+                            message: "Please enter your Address..."
+                        }
+                    ]}
+                    label='Address' name="your_address">
 
                         <Input placeholder="Enter your address..."/>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Checkbox>Cash On Delivery </Checkbox>
                     </Form.Item>
                     <Button type="primary" htmlType="submit">Confirm Order</Button>
                 </Form>
