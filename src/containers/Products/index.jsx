@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react";
 import { addToCart, getAllProducts,getProductsByCategory } from "../../Api";
-import { Card, List,Image, Typography, Badge,Rate, Button, message, Spin } from "antd";
+import { Card, List,Image, Typography, Badge,Rate, Button, message, Spin, Select } from "antd";
 import { useParams } from "react-router-dom";
 
 
@@ -8,6 +8,7 @@ const Product = () => {
     const [loading, setLoading] = useState(false)
     const parms = useParams()
     const [items,setItems]=useState([]);
+    const [sortOrder, setSortOrder] = useState('az')
     useEffect(()=>{
         setLoading(true);
         (parms?.categoryId 
@@ -21,13 +22,68 @@ const Product = () => {
         })
        
     },[parms]);
+
+    const getsortedItems = () =>{
+        const sortedItems = [...items]
+
+        sortedItems.sort((a,b)=>{
+
+            if(sortOrder === 'az'){
+                return a.title > b.title ? 1 : a.title === b.title ? 0 : -1
+            }
+            else  if(sortOrder === 'za'){
+                return a.title < b.title ? 1 : a.title === b.title ? 0 : -1
+            } 
+            else  if(sortOrder === 'lowHigh'){
+                return a.price > b.price ? 1 : a.price === b.price ? 0 : -1
+            }
+            else  if(sortOrder === 'highLow'){
+                return a.price < b.price ? 1 : a.price === b.price ? 0 : -1
+            }
+
+            
+        })
+        return sortedItems;
+    }
     if(loading) {
         return <Spin spinning/>
     }
 
     return (
-        <div>
-            <h1>products</h1>
+        <div className="productsContainer">
+            {/* <h1>products</h1> */}
+            
+            <div>
+            <Typography.Text>View Items Sorted By:</Typography.Text>
+                <Select 
+                onChange={( value)=>{
+                setSortOrder(value)
+                }}
+                defaultValue={'az'}
+                options={[{
+                    
+                    label:'Alphabetically A-Z',
+                    value: 'az'
+                },
+                {
+
+                    label:'Alphabetically Z-A',
+                    value: 'za'
+                },
+                {
+
+                    label:'Price Low to High',
+                    value: 'lowHigh'
+                },
+                {
+
+                    label:'Price High to Low',
+                    value: 'highLow'
+                }
+
+                
+                ]}></Select>
+            </div>
             <List 
             grid={{column:3}}            
             renderItem={(product,index)=>{
@@ -66,7 +122,7 @@ const Product = () => {
                             </Card>
                              </Badge.Ribbon>
     )}}
-            dataSource={items}>
+            dataSource={getsortedItems()}>
             </List>
         </div>
     )

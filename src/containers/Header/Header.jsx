@@ -13,8 +13,9 @@ const AppHeader = () => {
       }
     return ( 
         <div className="appHeader">
-       
+       <Typography.Title> Store </Typography.Title>
        <Menu
+       className="appMenu"
        mode="horizontal"
        onClick={onMenuClick}
        items={
@@ -78,7 +79,7 @@ const AppHeader = () => {
        
        />
 
-       <Typography.Title> Store </Typography.Title>
+       
        <AppCart/>
     
        </div>);
