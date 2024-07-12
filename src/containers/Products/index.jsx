@@ -138,6 +138,7 @@ const AddToCardButton = ({items}) =>{
         })
     }
     return(
+        // button
  <Button type="link" 
         onClick={()=>{
             addProductToCart()
